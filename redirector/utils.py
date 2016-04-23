@@ -25,18 +25,19 @@ class DataGetter(object):
        # headers for the request
        headers = {
                     'x-UserName': self.username,
-                    'x-Password': self.password
+                    'x-Password': self.password,
+		    'Content-Type': 'application/json'
                   }
 
        # general request data
        request_config = {
-		          'data': json.dumps(payload)
+		          'data': payload
                         }
 
        request_response = None
        if request_method == 'POST':
-           request_response = requests.post(current_api_url, headers=headers, data=request_method)
+           request_response = requests.post(current_api_url, headers=headers, data=json.dumps(payload))
        elif request_method == 'GET':
-           request_response = requests.get(current_api_url, headers=headers, data=request_method)
+           request_response = requests.get(current_api_url, headers=headers, data=json.dumps(payload))
 
        return json.loads(request_response.content)
